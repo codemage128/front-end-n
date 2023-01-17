@@ -1,7 +1,7 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-Also, used the [recharts](https://recharts.org/en-US/) library 
+Also, used the [Material UI](https://mui.com/),  [recharts](https://recharts.org/en-US/) library 
 ## Available Scripts
 
 In the project directory, you can run:
