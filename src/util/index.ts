@@ -26,7 +26,7 @@ const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
   }, {} as Record<K, T[]>);
 
 export const asRevenueDisplayData = (data: StudyType[]) => {
-  return data.map((item: StudyType, key: number) => {
+  return data && data.map((item: StudyType, key: number) => {
     const revenueNode: RevenueType = {
       name: item.date,
       revenue: item.revenue,
@@ -36,7 +36,7 @@ export const asRevenueDisplayData = (data: StudyType[]) => {
 };
 
 export const asModalityDisplayData = (data: StudyType[], modality: string) => {
-  const groupedByModality = groupBy(data, (i) => i.modality);
+  const groupedByModality = data ? groupBy(data, (i) => i.modality) : {};
   const studiesData: StudiesDisplayType[] = [];
   if (modality === "all") {
     Object.keys(groupedByModality).forEach((key) => {
@@ -53,11 +53,11 @@ export const asModalityDisplayData = (data: StudyType[], modality: string) => {
     };
     studiesData.push(studyNode);
   }
-  return { studiesData };
+  return studiesData;
 };
 
 export const asBodyPartDisplayData = (data: StudyType[], bodyPart: string) => {
-  const groupedByBodyPart = groupBy(data, (i) => i.bodyPart);
+  const groupedByBodyPart = data ? groupBy(data, (i) => i.bodyPart) : {};
   const bodyPartData: StudiesDisplayType[] = [];
   if (bodyPart === "all") {
     Object.keys(groupedByBodyPart).forEach((key) => {
@@ -74,11 +74,11 @@ export const asBodyPartDisplayData = (data: StudyType[], bodyPart: string) => {
     };
     bodyPartData.push(bodyPartNode);
   }
-  return { bodyPartData };
+  return bodyPartData;
 };
 
 export const asSlaDisplayData = (data: StudyType[]) => {
-  return data.map(item => {
+  return data && data.map(item => {
     const slaNode = {
       date: item.date,
       value: item.sla ? item.sla : 0

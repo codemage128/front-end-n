@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import React from "react";
 import { CircularProgress, Box, MenuItem} from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -20,22 +20,12 @@ const StudiesReport: FC<{ data: StudyType[] | null; userInfo: UserType }> = ({
   data,
   userInfo,
 }) => {
-  const [displayData, setDisplayData] = useState<StudiesDisplayType[] | null>(
-    null
-  );
   const [modality, setModality] = useState<string>("all");
-
+  const displayData = useMemo<StudiesDisplayType[] | null>(() => asModalityDisplayData(data as StudyType[], modality), [data, modality]);
   const handleChange = (event: SelectChangeEvent) => {
     setModality(event.target.value as string);
   };
 
-  useEffect(() => {
-    if (data) {
-      setDisplayData(null);
-      const { studiesData } = asModalityDisplayData(data, modality);
-      setDisplayData(studiesData);
-    }
-  }, [data, modality]);
   return (
     <>
       <Box m={2}>

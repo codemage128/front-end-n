@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useMemo } from "react";
 import React from "react";
 import { CircularProgress, Box } from "@mui/material";
 import {
@@ -20,15 +20,7 @@ const RevenueReport: FC<{ data: StudyType[] | null, userInfo: UserType }> = ({
   data,
   userInfo,
 }) => {
-  const [displayData, setDisplayData] = useState<RevenueType[] | null>(null);
-  useEffect(() => {
-    if (data) {
-      setDisplayData(null);
-      const revenueData= asRevenueDisplayData(data);
-      setDisplayData(revenueData);
-    }
-  }, [data, userInfo]);
-
+  const displayData = useMemo<RevenueType[]>(() => asRevenueDisplayData(data as StudyType[]), [data]);
   return (
     <>
       <Box m={2}>

@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import { Box} from "@mui/system";
-import { FC, useEffect, useState } from "react";
+import { FC,  useMemo} from "react";
 import {
   AreaChart,
   Area,
@@ -21,14 +21,7 @@ const SlaReport: FC<{ data: StudyType[] | null; userInfo: UserType }> = ({
   data,
   userInfo,
 }) => {
-  const [displayData, setDisplayData] = useState<SlaDisplayType[] | null>(null);
-  useEffect(() => {
-    if (data) {
-      setDisplayData(null);
-      const slaData = asSlaDisplayData(data);
-      setDisplayData(slaData);
-    }
-  }, [data]);
+  const displayData = useMemo<SlaDisplayType[] | null>(() => asSlaDisplayData(data as StudyType[]), [data]);
   const gradientOffset = () => {
     if (displayData) {
       const dataMax = Math.max(...displayData.map((i) => i.value));
